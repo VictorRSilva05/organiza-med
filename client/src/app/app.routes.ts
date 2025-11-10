@@ -6,6 +6,7 @@ import { FullLayoutComponent } from './components/full-layout/full-layout';
 import { authGuard } from './auth.guard';
 import { MedicosComponent } from './components/medicos/medicos';
 import { PacientesComponent } from './components/pacientes/pacientes';
+import { AtividadesComponent } from './components/atividades/atividades';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -23,7 +24,7 @@ export const routes: Routes = [
 
       { path: 'medicos', component: MedicosComponent },
       { path: 'pacientes', component: PacientesComponent },
-      // { path: 'atividades', component: AtividadesComponent }
+      { path: 'atividades', component: AtividadesComponent }
     ]
   },
 

@@ -1,0 +1,82 @@
+<mat-card>
+  <mat-card-header class="card-header">
+    <mat-card-title>Atividades Médicas</mat-card-title>
+
+    <mat-form-field appearance="outline" class="filtro-tipo">
+      <mat-label>Filtrar por Tipo</mat-label>
+      <mat-select [(ngModel)]="filtroTipo" (selectionChange)="onFiltroChange()">
+        <mat-option value="Todas">Todas</mat-option>
+        <mat-option value="Consulta">Consulta</mat-option>
+        <mat-option value="Cirurgia">Cirurgia</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="novaAtividade()">
+      <mat-icon>add</mat-icon>
+      Nova Atividade
+    </button>
+  </mat-card-header>
+
+  <mat-card-content>
+    <ng-container *ngIf="atividades$ | async as atividades; else loadingOrError">
+
+      <table mat-table [dataSource]="atividades" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="inicio">
+          <th mat-header-cell *matHeaderCellDef> Início </th>
+          <td mat-cell *matCellDef="let atividade"> {{atividade.inicio | date:'dd/MM/yy HH:mm'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="termino">
+          <th mat-header-cell *matHeaderCellDef> Término </th>
+          <td mat-cell *matCellDef="let atividade"> {{atividade.termino | date:'dd/MM/yy HH:mm'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tipo">
+          <th mat-header-cell *matHeaderCellDef> Tipo </th>
+          <td mat-cell *matCellDef="let atividade"> {{atividade.tipoAtividade}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="paciente">
+          <th mat-header-cell *matHeaderCellDef> Paciente </th>
+          <td mat-cell *matCellDef="let atividade"> {{atividade.paciente.nome || 'N/A'}} </td>
+        </ng-container>
+
+         <ng-container matColumnDef="medicos">
+          <th mat-header-cell *matHeaderCellDef> Médico(s) </th>
+          <td mat-cell *matCellDef="let atividade"> {{ formatarMedicos(atividade.medicos) }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef> Ações </th>
+          <td mat-cell *matCellDef="let atividade">
+            <button mat-icon-button color="accent" (click)="editarAtividade(atividade)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="excluirAtividade(atividade)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [colSpan]="displayedColumns.length" style="text-align: center;">
+            Nenhuma atividade encontrada.
+          </td>
+        </tr>
+      </table>
+
+    </ng-container>
+
+    <ng-template #loadingOrError>
+      <div class="loading-shade">
+        <mat-spinner></mat-spinner>
+        <p>Carregando atividades...</p>
+      </div>
+    </ng-template>
+
+  </mat-card-content>
+</mat-card>

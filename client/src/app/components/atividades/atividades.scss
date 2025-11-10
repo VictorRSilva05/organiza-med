@@ -1,0 +1,30 @@
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px 0 24px;
+  flex-wrap: wrap;
+}
+
+.filtro-tipo {
+  width: 200px;
+  margin-right: 16px;
+  padding-top: 16px;
+}
+
+mat-card-content {
+  padding-top: 20px;
+}
+
+table {
+  width: 100%;
+}
+
+.loading-shade {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
