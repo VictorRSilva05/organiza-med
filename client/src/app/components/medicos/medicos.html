@@ -8,9 +8,8 @@
   </mat-card-header>
 
   <mat-card-content>
-    <ng-container *ngIf="medicos$ | async as medicos;">
 
-      <table mat-table [dataSource]="medicos" class="mat-elevation-z8">
+      <table mat-table [dataSource]="medicos$" class="mat-elevation-z8">
 
         <ng-container matColumnDef="nome">
           <th mat-header-cell *matHeaderCellDef> Nome </th>
@@ -44,8 +43,6 @@
         </tr>
 
       </table>
-
-    </ng-container>
 
   </mat-card-content>
 </mat-card>

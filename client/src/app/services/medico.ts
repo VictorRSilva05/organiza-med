@@ -1,7 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { Medico } from '../models/medico';
+import { HttpHeaders } from '@angular/common/http';
+import { mapearRespostaApi } from '../util/mapear-resposta-api';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,9 @@ export class MedicoService {
   constructor(private http: HttpClient) { }
 
   public getMedicos(): Observable<Medico[]> {
-    return this.http.get<any>(this.baseUrl).pipe(map(res => res.registros));
+    return this.http.get<any>(this.baseUrl).pipe(
+      map(mapearRespostaApi<ListarMedicosApiResponseModel>),
+      map((res) => res.registros));
   }
 
   public getMedicoById(id: string): Observable<Medico> {
@@ -39,4 +43,15 @@ export class MedicoService {
 
     return this.http.get<Medico[]>(`${this.baseUrl}/top-10`, { params });
   }
+}
+
+export interface ListarMedicosApiResponseModel {
+  quantidadeRegistros: number;
+  registros: Medico[];
+}
+
+export interface ListarMedicosModel {
+  id: string;
+  nome: string;
+  crm: string;
 }

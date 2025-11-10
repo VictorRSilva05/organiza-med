@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>
+  {{ isEditMode ? 'Editar Médico' : 'Novo Médico' }}
+</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="medicoForm">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nome Completo</mat-label>
+      <input matInput formControlName="nome">
+      <mat-error *ngIf="medicoForm.get('nome')?.hasError('required')">
+        Nome é obrigatório.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>CRM</mat-label>
+      <input matInput formControlName="crm" placeholder="12345-SP">
+      <mat-error *ngIf="medicoForm.get('crm')?.hasError('required')">
+        CRM é obrigatório.
+      </mat-error>
+      <mat-error *ngIf="medicoForm.get('crm')?.hasError('pattern')">
+        Formato inválido. (Ex: 12345-SP)
+      </mat-error>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="medicoForm.invalid">
+    {{ isEditMode ? 'Atualizar' : 'Salvar' }}
+  </button>
+</mat-dialog-actions>
