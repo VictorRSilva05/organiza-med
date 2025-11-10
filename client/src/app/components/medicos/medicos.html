@@ -1,0 +1,58 @@
+<mat-card>
+  <mat-card-header class="card-header">
+    <mat-card-title>Cadastro de Médicos</mat-card-title>
+    <button mat-raised-button color="primary" (click)="novoMedico()">
+      <mat-icon>add</mat-icon>
+      Novo Médico
+    </button>
+  </mat-card-header>
+
+  <mat-card-content>
+    <ng-container *ngIf="medicos$ | async as medicos; else loadingOrError">
+
+      <table mat-table [dataSource]="medicos" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef> Nome </th>
+          <td mat-cell *matCellDef="let medico"> {{medico.nome}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="crm">
+          <th mat-header-cell *matHeaderCellDef> CRM </th>
+          <td mat-cell *matCellDef="let medico"> {{medico.crm}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef> Ações </th>
+          <td mat-cell *matCellDef="let medico">
+            <button mat-icon-button color="accent" (click)="editarMedico(medico)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="excluirMedico(medico)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [colSpan]="displayedColumns.length" style="text-align: center;">
+            Nenhum médico encontrado.
+          </td>
+        </tr>
+
+      </table>
+
+    </ng-container>
+
+    <ng-template #loadingOrError>
+      <div class="loading-shade">
+        <mat-spinner></mat-spinner>
+        <p>Carregando médicos...</p>
+      </div>
+    </ng-template>
+
+  </mat-card-content>
+</mat-card>
