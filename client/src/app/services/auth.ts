@@ -19,12 +19,15 @@ export class AuthService {
 
   public login(credentials: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/autenticar`, credentials).pipe(
-      tap((response: any) => {
-        if (response && response.token) {
-          localStorage.setItem(this.TOKEN_KEY, response.token);
-        }
-      })
-    );
+  tap((response: any) => {
+    if (response && response.dados && response.dados.chave) { // <--- CORRIGIDO
+      localStorage.setItem(this.TOKEN_KEY, response.dados.chave); // <--- CORRIGIDO
+    }
+    else {
+      console.error('Token não encontrado em response.dados.chave', response);
+    }
+  })
+)
   }
 
   public logout(): void {

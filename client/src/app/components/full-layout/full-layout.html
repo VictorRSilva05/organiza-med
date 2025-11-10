@@ -1,0 +1,42 @@
+<mat-sidenav-container class="sidenav-container">
+
+  <mat-sidenav #sidenav mode="side" opened class="sidenav">
+    <mat-nav-list>
+      <h3 mat-subheader>Organiza Med</h3>
+
+      <a mat-list-item routerLink="/dashboard/medicos">
+        <mat-icon mat-list-icon>group</mat-icon>
+        <span mat-line>Médicos</span>
+      </a>
+
+      <a mat-list-item routerLink="/dashboard/pacientes">
+        <mat-icon mat-list-icon>personal_injury</mat-icon>
+        <span mat-line>Pacientes</span>
+      </a>
+
+      <a mat-list-item routerLink="/dashboard/atividades">
+        <mat-icon mat-list-icon>event</mat-icon>
+        <span mat-line>Atividades</span>
+      </a>
+
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="sidenav-content">
+
+    <mat-toolbar color="primary">
+      <span>Organiza Med</span>
+      <span class="toolbar-spacer"></span>
+
+      <button mat-icon-button (click)="logout()">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
