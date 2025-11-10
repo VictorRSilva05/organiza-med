@@ -12,8 +12,8 @@ using OrganizaMed.Infraestrutura.Orm.Compartilhado;
 namespace OrganizaMed.Infraestrutura.Orm.Migrations
 {
     [DbContext(typeof(OrganizaMedDbContext))]
-    [Migration("20241223134418_ConfirmacaoEmail")]
-    partial class ConfirmacaoEmail
+    [Migration("20251109234641_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
