@@ -1,0 +1,25 @@
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px 0 24px;
+  flex-wrap: wrap;
+}
+
+mat-card-content {
+  padding-top: 20px;
+}
+
+table {
+  width: 100%;
+}
+
+.loading-shade {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.7);
+}

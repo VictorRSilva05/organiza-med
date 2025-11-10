@@ -1,0 +1,56 @@
+<mat-card>
+  <mat-card-header class="card-header">
+    <mat-card-title>Cadastro de Pacientes</mat-card-title>
+    <button mat-raised-button color="primary" (click)="novoPaciente()">
+      <mat-icon>add</mat-icon>
+      Novo Paciente
+    </button>
+  </mat-card-header>
+
+  <mat-card-content>
+    <ng-container *ngIf="pacientes$ | async as pacientes">
+
+      <table mat-table [dataSource]="pacientes" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef> Nome </th>
+          <td mat-cell *matCellDef="let paciente"> {{paciente.nome}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cpf">
+          <th mat-header-cell *matHeaderCellDef> CPF </th>
+          <td mat-cell *matCellDef="let paciente"> {{paciente.cpf}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let paciente"> {{paciente.email}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef> Ações </th>
+          <td mat-cell *matCellDef="let paciente">
+            <button mat-icon-button color="accent" (click)="editarPaciente(paciente)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="excluirPaciente(paciente)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [colSpan]="displayedColumns.length" style="text-align: center;">
+            Nenhum paciente encontrado.
+          </td>
+        </tr>
+
+      </table>
+
+    </ng-container>
+
+  </mat-card-content>
+</mat-card>

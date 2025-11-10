@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Medico } from '../models/medico';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class MedicoService {
   constructor(private http: HttpClient) { }
 
   public getMedicos(): Observable<Medico[]> {
-    return this.http.get<Medico[]>(this.baseUrl);
+    return this.http.get<any>(this.baseUrl).pipe(map(res => res.registros));
   }
 
   public getMedicoById(id: string): Observable<Medico> {

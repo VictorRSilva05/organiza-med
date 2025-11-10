@@ -19,6 +19,7 @@ export const authInterceptor: HttpInterceptorFn = (
   const apiBaseUrl = 'https://localhost:7043/api';
 
   if (token && req.url.startsWith(apiBaseUrl)) {
+    console.log(token)
     const authReq = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`
@@ -26,9 +27,9 @@ export const authInterceptor: HttpInterceptorFn = (
     });
 
     return next(authReq).pipe(
-      catchError((err: any) => {
-        return handleError(err, authService, notificationService, router);
-      })
+      // catchError((err: any) => {
+      //   return handleError(err, authService, notificationService, router);
+      // })
     );
   }
 

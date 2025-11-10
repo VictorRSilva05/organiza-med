@@ -8,7 +8,7 @@
   </mat-card-header>
 
   <mat-card-content>
-    <ng-container *ngIf="medicos$ | async as medicos; else loadingOrError">
+    <ng-container *ngIf="medicos$ | async as medicos;">
 
       <table mat-table [dataSource]="medicos" class="mat-elevation-z8">
 
@@ -46,13 +46,6 @@
       </table>
 
     </ng-container>
-
-    <ng-template #loadingOrError>
-      <div class="loading-shade">
-        <mat-spinner></mat-spinner>
-        <p>Carregando médicos...</p>
-      </div>
-    </ng-template>
 
   </mat-card-content>
 </mat-card>
