@@ -1,0 +1,54 @@
+<h2 mat-dialog-title>
+  {{ isEditMode ? 'Editar Paciente' : 'Novo Paciente' }}
+</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="pacienteForm">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nome Completo</mat-label>
+      <input matInput formControlName="nome">
+      <mat-error *ngIf="pacienteForm.get('nome')?.hasError('required')">
+        Nome é obrigatório.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>CPF (apenas números)</mat-label>
+      <input matInput formControlName="cpf" placeholder="12345678900">
+      <mat-error *ngIf="pacienteForm.get('cpf')?.hasError('required')">
+        CPF é obrigatório.
+      </mat-error>
+      <mat-error *ngIf="pacienteForm.get('cpf')?.hasError('pattern')">
+        Formato inválido (apenas 11 números).
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" placeholder="email@dominio.com">
+      <mat-error *ngIf="pacienteForm.get('email')?.hasError('required')">
+        Email é obrigatório.
+      </mat-error>
+      <mat-error *ngIf="pacienteForm.get('email')?.hasError('email')">
+        Email inválido.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Telefone</mat-label>
+      <input matInput formControlName="telefone" placeholder="(49) 99999-9999">
+      <mat-error *ngIf="pacienteForm.get('telefone')?.hasError('required')">
+        Telefone é obrigatório.
+      </mat-error>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="pacienteForm.invalid">
+    {{ isEditMode ? 'Atualizar' : 'Salvar' }}
+  </button>
+</mat-dialog-actions>

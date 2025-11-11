@@ -40,8 +40,10 @@ public class EditarPacienteRequestHandler(
         var pacientes = await repositorioPaciente.SelecionarTodosAsync();
 
         if (CpfDuplicado(pacienteSelecionado, pacientes))
-            return Result.Fail(PacienteErrorResults.CpfDuplicadoError(pacienteSelecionado.Cpf));
-        
+        {
+            return Result.Fail(PacienteErrorResults.CpfDuplicadoError(request.Cpf));
+        }
+
         try
         {
             await repositorioPaciente.EditarAsync(pacienteSelecionado);
@@ -61,7 +63,7 @@ public class EditarPacienteRequestHandler(
     private bool CpfDuplicado(Paciente paciente, IEnumerable<Paciente> pacientes)
     {
         return pacientes
-            .Any(registro => string.Equals(
+            .Any(registro => paciente.Id != registro.Id && string.Equals(
                 registro.Cpf,
                 paciente.Cpf,
                 StringComparison.CurrentCultureIgnoreCase)
