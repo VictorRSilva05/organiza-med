@@ -27,15 +27,27 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>{{ isMultiploMedicos() ? 'Equipe Médica' : 'Médico' }}</mat-label>
-        <mat-select formControlName="medicoIds" [multiple]="isMultiploMedicos()">
-          <mat-option *ngFor="let medico of (medicos$ | async)" [value]="medico.id">
+      <mat-form-field appearance="outline" *ngIf="!isMultiploMedicos()">
+        <mat-label>Médico</mat-label>
+        <mat-select formControlName="medicoIds"> <mat-option *ngFor="let medico of (medicos$ | async)"
+            [value]="medico.id">
             {{medico.nome}} ({{medico.crm}})
           </mat-option>
         </mat-select>
         <mat-error *ngIf="atividadeForm.get('medicoIds')?.hasError('required')">
-          Médico(s) é obrigatório.
+          Médico é obrigatório.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" *ngIf="isMultiploMedicos()">
+        <mat-label>Equipe Médica</mat-label>
+        <mat-select formControlName="medicoIds" [multiple]="true"> <mat-option *ngFor="let medico of (medicos$ | async)"
+            [value]="medico.id">
+            {{medico.nome}} ({{medico.crm}})
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="atividadeForm.get('medicoIds')?.hasError('required')">
+          Equipe médica é obrigatória.
         </mat-error>
       </mat-form-field>
 
