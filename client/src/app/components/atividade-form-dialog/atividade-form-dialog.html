@@ -1,0 +1,76 @@
+<h2 mat-dialog-title>
+  {{ isEditMode ? 'Editar Atividade' : 'Nova Atividade' }}
+</h2>
+
+<mat-dialog-content>
+  <ng-container *ngIf="(medicos$ | async) && (pacientes$ | async); else loading">
+
+    <form [formGroup]="atividadeForm">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo de Atividade</mat-label>
+        <mat-select formControlName="tipoAtividade">
+          <mat-option value="Consulta">Consulta</mat-option>
+          <mat-option value="Cirurgia">Cirurgia</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Paciente</mat-label>
+        <mat-select formControlName="pacienteId">
+          <mat-option *ngFor="let paciente of (pacientes$ | async)" [value]="paciente.id">
+            {{paciente.nome}} ({{paciente.cpf}})
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="atividadeForm.get('pacienteId')?.hasError('required')">
+          Paciente é obrigatório.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ isMultiploMedicos() ? 'Equipe Médica' : 'Médico' }}</mat-label>
+        <mat-select formControlName="medicoIds" [multiple]="isMultiploMedicos()">
+          <mat-option *ngFor="let medico of (medicos$ | async)" [value]="medico.id">
+            {{medico.nome}} ({{medico.crm}})
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="atividadeForm.get('medicoIds')?.hasError('required')">
+          Médico(s) é obrigatório.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Início da Atividade</mat-label>
+        <input matInput type="datetime-local" formControlName="inicio">
+        <mat-error *ngIf="atividadeForm.get('inicio')?.hasError('required')">
+          Início é obrigatório.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Término da Atividade</mat-label>
+        <input matInput type="datetime-local" formControlName="termino">
+        <mat-error *ngIf="atividadeForm.get('termino')?.hasError('required')">
+          Término é obrigatório.
+        </mat-error>
+      </mat-form-field>
+
+    </form>
+
+  </ng-container>
+
+  <ng-template #loading>
+    <div class="dialog-loading-shade">
+      <mat-spinner></mat-spinner>
+      <p>Carregando médicos e pacientes...</p>
+    </div>
+  </ng-template>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="atividadeForm.invalid">
+    {{ isEditMode ? 'Atualizar' : 'Salvar' }}
+  </button>
+</mat-dialog-actions>
