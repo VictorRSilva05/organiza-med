@@ -17,6 +17,13 @@ mat-card-content {
   padding-top: 20px;
 }
 
+mat-card {
+  width: fit-content;
+  /* Opcional: define uma largura máxima se não quiser que ele
+     cresça indefinidamente em telas ultra-largas */
+  max-width: 90vw;
+}
+
 table {
   width: 100%;
 }
